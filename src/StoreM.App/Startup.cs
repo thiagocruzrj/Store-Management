@@ -14,6 +14,8 @@ using StoreM.App.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StoreM.Data.Context;
+using StoreM.Data.Repositories;
+using StoreM.Business.Interfaces;
 
 namespace StoreM.App
 {
@@ -49,6 +51,11 @@ namespace StoreM.App
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddScoped<StoreDbContext>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProviderRepository, ProviderRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
