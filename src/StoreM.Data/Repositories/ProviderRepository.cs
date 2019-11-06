@@ -13,7 +13,7 @@ namespace StoreM.Data.Repositories
         {
         }
 
-        public async Task<Provider> GetProviderByAddres(Guid id)
+        public async Task<Provider> GetProviderByAddress(Guid id)
         {
             return await Db.Providers.AsNoTracking()
                 .Include(c => c.Address)

@@ -8,7 +8,7 @@ namespace StoreM.Business.Interfaces
 {
     public interface IProviderRepository : IRepository<Provider>
     {
-        Task<Provider> GetProviderByAddres(Guid id);
+        Task<Provider> GetProviderByAddress(Guid id);
         Task<Provider> GetProviderProductsAddress(Guid id);
     }
 }

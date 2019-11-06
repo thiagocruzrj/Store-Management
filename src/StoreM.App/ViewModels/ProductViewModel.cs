@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +11,10 @@ namespace StoreM.App.ViewModels
     {
         [Key]
         public Guid Id { get; set; }
+
+        [DisplayName("Fornecedor")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public Guid ProviderId { get; set; }
 
         [DisplayName("Nome")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -36,5 +42,6 @@ namespace StoreM.App.ViewModels
 
         /*EF Relations*/
         public ProviderViewModel Provider { get; set; }
+        public IEnumerable<ProviderViewModel> Providers { get; set; }
     }
 }
