@@ -1,6 +1,6 @@
 using System;
 
-namespace StoreM.App.Models
+namespace StoreM.App.ViewModels
 {
     public class ErrorViewModel
     {
