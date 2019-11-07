@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreM.App.ViewModels;
 using StoreM.Business.Interfaces;
@@ -58,9 +60,16 @@ namespace StoreM.App.Controllers
             productViewModel = await PopulateProviders(productViewModel);
             if (!ModelState.IsValid) return View(productViewModel);
 
+            var imgPrefix = Guid.NewGuid() + "_";
+            if(!await UploadFile(productViewModel.ImageUpload, imgPrefix))
+            {
+                return View(productViewModel);
+            }
+
+            productViewModel.Image = imgPrefix + productViewModel.ImageUpload.FileName;
             await _productRepository.Add(_mapper.Map<Product>(productViewModel));
 
-            return View(productViewModel);
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Edit/5
@@ -128,6 +137,26 @@ namespace StoreM.App.Controllers
         {
             product.Providers = _mapper.Map<IEnumerable<ProviderViewModel>>(await _providerRepository.GetAll());
             return product;
+        }
+
+        private async Task<bool> UploadFile(IFormFile file, string imgPrefix)
+        {
+            if (file.Length <= 0) return false;
+
+            var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imgPrefix + file.FileName);
+
+            if (System.IO.File.Exists(path))
+            {
+                ModelState.AddModelError(string.Empty, "Já existe um arquivo com esse nome!");
+                return false;
+            }
+
+            using (var stream = new FileStream(path, FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return true;
         }
     }
 }
