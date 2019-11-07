@@ -29,8 +29,10 @@ namespace StoreM.App.ViewModels
         [DisplayName("Imagem")]
         public string Image { get; set; }
 
+        [DisplayName("Imagem do produto")]
         public IFormFile ImageUpload { get; set; }
 
+        [DisplayName("Preço")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Price { get; set; }
 
