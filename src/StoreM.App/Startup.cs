@@ -12,6 +12,9 @@ using StoreM.Data.Context;
 using StoreM.Data.Repositories;
 using StoreM.Business.Interfaces;
 using AutoMapper;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
+using System.Collections.Generic;
 
 namespace StoreM.App
 {
@@ -76,6 +79,16 @@ namespace StoreM.App
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            /* add localization culture pt-BR*/
+            var defaultCulture = new CultureInfo("pt-BR");
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(defaultCulture),
+                SupportedCultures = new List<CultureInfo> { defaultCulture },
+                SupportedUICultures = new List<CultureInfo> { defaultCulture }
+            };
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseMvc(routes =>
             {

@@ -1,5 +1,3 @@
-using System;
-
 namespace StoreM.App.ViewModels
 {
     public class ErrorViewModel
