@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using StoreM.App.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,6 +32,7 @@ namespace StoreM.App.ViewModels
         [DisplayName("Imagem do produto")]
         public IFormFile ImageUpload { get; set; }
 
+        [Coin]
         [DisplayName("Preço")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public decimal Price { get; set; }
